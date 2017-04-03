@@ -1,39 +1,43 @@
-// Include React
-var React = require("react");
 
-// Creating the Form component
-var Form = React.createClass({
+import React, { Component } from 'react';
 
-  // Here we set a generic state associated with the text being searched for
-  getInitialState: function() {
-    return { term: "", startyear: "", endyear: ""};
-  },
+export default class Results extends Component {
 
-  // These functions will respond to the user input
-    handleChange: function(event) {
+    constructor(props) {
+    super(props);
+    this.state = {term: "", startyear: "", endyear: ""};
+    this.handleChange = this.handleChange.bind(this);
+    this.handleChangeStart = this.handleChangeStart.bind(this);
+    this.handleChangeEnd = this.handleChangeEnd.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  
+    handleChange(event) {
     this.setState({ term: event.target.value });
-  },
+  }
 
-    handleChangeStart: function(event) {
+    handleChangeStart(event) {
     this.setState({ startyear: event.target.value });
-  },
+  }
 
-    handleChangeEnd: function(event) {
+    handleChangeEnd(event) {
     this.setState({ endyear: event.target.value });
-  },
+  }
 
-  // When a user submits...
-  handleSubmit: function(event) {
+
+  handleSubmit(event) {
     event.preventDefault();
-    // Set the parent to have the search term
     this.props.setTerm(this.state.term, this.state.startyear, this.state.endyear);
+    console.log(this.state.term);
     this.setState({ term: "" });
     this.setState({ startyear: "" });
     this.setState({ endyear: "" });
-  },
+  }
 
-  // Here we describe this component's render method
-  render: function() {
+
+
+  render() {
     return (
       <div className="panel panel-default">
         <div className="panel-heading">
@@ -45,12 +49,6 @@ var Form = React.createClass({
               <h5 className="">
                 Topic
               </h5>
-
-              {/*
-                Note how each of the form elements has an id that matches the state.
-                This is not necessary but it is convenient.
-                Also note how each has an onChange event associated with our handleChange event.
-              */}
               <input
                 value={this.state.term}
                 type="text"
@@ -95,7 +93,5 @@ var Form = React.createClass({
       </div>
     );
   }
-});
+};
 
-// Export the component back for use in other files
-module.exports = Form;

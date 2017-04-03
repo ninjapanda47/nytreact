@@ -2,7 +2,7 @@
 var React = require("react");
 
 // Here we include all of the sub-components
-var Form = require("./children/Form");
+import Form from "./children/Form";
 import Results from "./children/Results";
 import Articles from "./children/Articles";
 
@@ -15,6 +15,21 @@ var Main = React.createClass({
   getInitialState: function() {
     return { term: "", results:[], articles: [], deleted: []};
   },
+
+  componentDidMount: function() {
+    helpers.getArticles().then(function(response) {
+      console.log(response);
+      if (response !== this.state.articles) {
+        console.log("articles", response);
+        this.setState({ articles: response});
+      }
+    }.bind(this));
+  },
+
+  updateArt: function() {
+    console.log("clicked");
+  },
+
 
   setTerm: function(term, startyear, endyear) {
     helpers.runQuery(term, startyear, endyear).then(function(data) {
@@ -41,7 +56,7 @@ var Main = React.createClass({
             <Form setTerm={this.setTerm} />
           </div>
           <div className="row">
-            <Results art = {this.state.results /* .filter(item=> !savedLinks.map(s=>s.link).includes(item.link))*/} />
+            <Results art = {this.state.results} onClick={this.updateArt} />
           </div>
           <div className="row">
             <Articles sart={this.state.articles} />

@@ -46,15 +46,15 @@ var helper = {
   getArticles: function() {
     return axios.get("/api")
     .then(function(response){
-      console.log(response);
+      console.log(response.data[0].title);
     var sheadlines = [];
     var slink = [];
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < response.data.length; i++) {
       sheadlines.push(response.data[i].title);
       slink.push(response.data[i].url);
     }     
     var sart = [];
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < response.data.length; i++) {
       var sobj = {
         'id': response.data[i]._id,
         'headlines': response.data[i].title,

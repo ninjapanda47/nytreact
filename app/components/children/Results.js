@@ -1,4 +1,4 @@
-// Osei's trendy new ES6 code
+
 import React, { Component } from 'react';
 
 var helpers = require("../utils/helpers");
@@ -6,13 +6,13 @@ var helpers = require("../utils/helpers");
 // Creating the Results component
 export default class Results extends Component {
 
+
   save(item){  
         helpers.postArticles(item.headlines, item.link).then(function(data) {
-          console.log(item.headlines);
       }),
         helpers.getArticles().then(function(response) {
-          console.log();
-  
+          return response;
+          this.setState({ articles: response});
         })
 
   }
