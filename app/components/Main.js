@@ -1,5 +1,5 @@
 // Include React
-var React = require("react");
+import React, { Component } from 'react';
 
 // Here we include all of the sub-components
 import Form from "./children/Form";
@@ -9,40 +9,43 @@ import Articles from "./children/Articles";
 // Helper for making AJAX requests to our API
 var helpers = require("./utils/helpers");
 
-// Creating the Main component
-var Main = React.createClass({
 
-  getInitialState: function() {
-    return { term: "", results:[], articles: [], deleted: []};
-  },
+export default class Main extends Component {
 
-  componentDidMount: function() {
+    constructor(props) {
+    super(props);
+    this.state = { term: "", results:[], articles: [], deleted: []};
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.setTerm = this.setTerm.bind(this);
+    this.updateArt = this.updateArt.bind(this);
+  }
+
+  componentDidMount() {
     helpers.getArticles().then(function(response) {
-      console.log(response);
-      if (response !== this.state.articles) {
-        console.log("articles", response);
-        this.setState({ articles: response});
-      }
-    }.bind(this));
-  },
+          console.log(response);
+          if (response !== this.state.articles) {
+            console.log("articles", response);
+            this.setState({ articles: response});
+          }
+    }.bind(this))
+    }
 
-  updateArt: function() {
+  updateArt() {
     console.log("clicked");
-  },
+  }
 
 
-  setTerm: function(term, startyear, endyear) {
+  setTerm(term, startyear, endyear) {
     helpers.runQuery(term, startyear, endyear).then(function(data) {
       if (data !== this.state.results) {
         console.log("search", data);
         this.setState({ results: data });
-      }
-    }.bind(this))
-  },
+      }}.bind(this))
+  }
 
 
   // Here we render the function
-  render: function() {
+  render() {
     return (
       <div className="container">
         <div className="row">
@@ -56,7 +59,7 @@ var Main = React.createClass({
             <Form setTerm={this.setTerm} />
           </div>
           <div className="row">
-            <Results art = {this.state.results} onClick={this.updateArt} />
+            <Results art = {this.state.results} onClick={this.updateArt.bind(this)} />
           </div>
           <div className="row">
             <Articles sart={this.state.articles} />
@@ -65,7 +68,7 @@ var Main = React.createClass({
       </div>
     );
   }
-});
+}
 
 
-module.exports = Main;
+
