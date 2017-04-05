@@ -18,7 +18,7 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
 app.use(express.static("./public"));
 
-mongoose.connect("mongodb://localhost/nytreact");
+mongoose.connect("mongodb://heroku_v77smffs:b431oess6hv33pjdr79e46m8j5@ds151820.mlab.com:51820/heroku_v77smffs");
 var db = mongoose.connection;
 
 db.on("error", function(err) {
@@ -73,6 +73,6 @@ app.put("/api", function(req, res){
     });
 });
 
-app.listen(PORT, function() {
+app.listen(PORT function() {
   console.log("App listening on PORT: " + PORT);
 });
