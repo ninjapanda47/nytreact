@@ -1,10 +1,8 @@
-// Include the axios package for performing HTTP requests (promise based alternative to request)
+
 var axios = require("axios");
 
-// Geocoder API
 var authKey = "b9f91d369ff59547cd47b931d8cbc56b:0:74623931";
 
-// Helper functions for making API Calls
 var helper = {
 
   runQuery: function(term, startyear, endyear) {
@@ -34,7 +32,6 @@ var helper = {
 
   },
 
-  // This function posts new searches to our database.
   postArticles: function(headlines, link) {
     var newArticle = {title: headlines, url: link, saved: true};
     return axios.post("/api", newArticle)
@@ -46,7 +43,6 @@ var helper = {
   getArticles: function() {
     return axios.get("/api")
     .then(function(response){
-      console.log(response.data[0].title);
     var sheadlines = [];
     var slink = [];
     for (var i = 0; i < response.data.length; i++) {
@@ -70,5 +66,4 @@ var helper = {
 };
 
 
-// We export the API helper
 module.exports = helper;

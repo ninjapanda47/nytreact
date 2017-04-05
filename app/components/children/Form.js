@@ -11,7 +11,6 @@ export default class Results extends Component {
     this.handleChangeEnd = this.handleChangeEnd.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
   
     handleChange(event) {
     this.setState({ term: event.target.value });
@@ -29,13 +28,10 @@ export default class Results extends Component {
   handleSubmit(event) {
     event.preventDefault();
     this.props.setTerm(this.state.term, this.state.startyear, this.state.endyear);
-    console.log(this.state.term);
     this.setState({ term: "" });
     this.setState({ startyear: "" });
     this.setState({ endyear: "" });
   }
-
-
 
   render() {
     return (

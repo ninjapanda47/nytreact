@@ -1,16 +1,14 @@
-// Osei's trendy new ES6 code
+
 import React, { Component } from 'react';
 
 var helpers = require("../utils/helpers");
 
-// Creating the Results component
 export default class Articles extends Component {
   
     remove(item){  
       console.log("remove!!");
 
   }
-
 
   render() {
     return (

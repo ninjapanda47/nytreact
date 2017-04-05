@@ -1,18 +1,15 @@
-// Include Server Dependencies
+
 var express = require("express");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 
-// Require History Schema
 var Articles = require("./models/Articles");
 
-// Create Instance of Express
 var app = express();
-// Sets an initial port. We'll use this later in our listener
+
 var PORT = process.env.PORT || 3000;
 
-// Run Morgan for Logging
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -21,9 +18,6 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
 app.use(express.static("./public"));
 
-// -------------------------------------------------
-
-// MongoDB Configuration configuration (Change this URL to your own DB)
 mongoose.connect("mongodb://localhost/nytreact");
 var db = mongoose.connection;
 
@@ -35,14 +29,10 @@ db.once("open", function() {
   console.log("Mongoose connection successful.");
 });
 
-// -------------------------------------------------
-
-// Main "/" Route. This will redirect the user to our rendered React application
 app.get("/", function(req, res) {
   res.sendFile(__dirname + "/public/index.html");
 });
 
-//Get saved articles
 app.get("/api", function(req, res) {
   Articles.find({saved: true}).exec(function(err, doc) {
     if (err) {
@@ -54,8 +44,6 @@ app.get("/api", function(req, res) {
   });
 });
 
-
-//Save articles
 app.post("/api", function(req, res) {
 var newArticle = new Articles(req.body);
   newArticle.save(function(err, doc) {
@@ -68,9 +56,6 @@ var newArticle = new Articles(req.body);
   });
 });
 
-// -------------------------------------------------
-
-// Listener
 app.listen(PORT, function() {
   console.log("App listening on PORT: " + PORT);
 });

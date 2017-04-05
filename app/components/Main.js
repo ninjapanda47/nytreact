@@ -1,14 +1,11 @@
-// Include React
+
 import React, { Component } from 'react';
 
-// Here we include all of the sub-components
 import Form from "./children/Form";
 import Results from "./children/Results";
 import Articles from "./children/Articles";
 
-// Helper for making AJAX requests to our API
 var helpers = require("./utils/helpers");
-
 
 export default class Main extends Component {
 
@@ -17,34 +14,29 @@ export default class Main extends Component {
     this.state = { term: "", results:[], articles: [], deleted: []};
     this.componentDidMount = this.componentDidMount.bind(this);
     this.setTerm = this.setTerm.bind(this);
-    this.updateArt = this.updateArt.bind(this);
+    this.setArticles = this.setArticles.bind(this);
   }
 
   componentDidMount() {
     helpers.getArticles().then(function(response) {
-          console.log(response);
           if (response !== this.state.articles) {
-            console.log("articles", response);
             this.setState({ articles: response});
           }
     }.bind(this))
     }
 
-  updateArt() {
-    console.log("clicked");
+  setArticles(articles){
+    this.setState({ articles: articles});
   }
 
 
   setTerm(term, startyear, endyear) {
     helpers.runQuery(term, startyear, endyear).then(function(data) {
       if (data !== this.state.results) {
-        console.log("search", data);
         this.setState({ results: data });
       }}.bind(this))
   }
 
-
-  // Here we render the function
   render() {
     return (
       <div className="container">
@@ -59,7 +51,7 @@ export default class Main extends Component {
             <Form setTerm={this.setTerm} />
           </div>
           <div className="row">
-            <Results art = {this.state.results} onClick={this.updateArt.bind(this)} />
+            <Results art = {this.state.results} setArticles={this.setArticles.bind(this)}/>
           </div>
           <div className="row">
             <Articles sart={this.state.articles} />

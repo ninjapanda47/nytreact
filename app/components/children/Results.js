@@ -3,21 +3,23 @@ import React, { Component } from 'react';
 
 var helpers = require("../utils/helpers");
 
-// Creating the Results component
 export default class Results extends Component {
 
+   constructor(props) {
+        super(props);
+        this.save = this.save.bind(this);
+    }
 
-  save(item){  
-        helpers.postArticles(item.headlines, item.link).then(function(data) {
-      }),
-        helpers.getArticles().then(function(response) {
-          return response;
-          this.setState({ articles: response});
-        })
-
+   save(item) {
+    helpers.postArticles(item.headlines, item.link).then(data => {
+      helpers.getArticles().then(response => {
+        console.log('here');
+        this.props.setArticles(response);
+        return response; 
+      })
+    })
   }
 
-  // Here we render the function
   render() {
     return (
       <div className="panel panel-default">
@@ -34,7 +36,7 @@ export default class Results extends Component {
       </div>
     );
   }
-};
+}
 
 
 
