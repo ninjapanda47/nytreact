@@ -29,7 +29,6 @@ export default class Main extends Component {
     this.setState({ articles: articles});
   }
 
-
   setTerm(term, startyear, endyear) {
     helpers.runQuery(term, startyear, endyear).then(function(data) {
       if (data !== this.state.results) {
@@ -54,7 +53,7 @@ export default class Main extends Component {
             <Results art = {this.state.results} setArticles={this.setArticles.bind(this)}/>
           </div>
           <div className="row">
-            <Articles sart={this.state.articles} />
+            <Articles sart={this.state.articles} setArticles={this.setArticles.bind(this)} />
           </div>
         </div>
       </div>

@@ -6,7 +6,14 @@ var helpers = require("../utils/helpers");
 export default class Articles extends Component {
   
     remove(item){  
-      console.log("remove!!");
+    helpers.deleteArticles(item.id).then(data => {
+      console.log("delete");
+      helpers.getArticles().then(response => {
+        console.log('here');
+        this.props.setArticles(response);
+        return response; 
+      })
+    })
 
   }
 

@@ -56,6 +56,23 @@ var newArticle = new Articles(req.body);
   });
 });
 
+app.put("/api", function(req, res){
+    console.log(req.body);
+    Articles.findByIdAndUpdate({
+        _id: req.body.params.id
+    }, {
+        $set: {
+            saved: false
+        }
+    }, function(error, doc) {
+        if (error) {
+            console.log(error);
+        } else {
+            res.send(doc);
+        }
+    });
+});
+
 app.listen(PORT, function() {
   console.log("App listening on PORT: " + PORT);
 });
